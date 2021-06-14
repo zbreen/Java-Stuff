@@ -6,13 +6,10 @@ import model.Reservation;
 import service.CustomerService;
 import service.ReservationService;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class MainMenu {
-    public void MainMenu() {
+    public static void MainMenu() {
         boolean isFunction = true;
         Set<IRoom> collectedList; //= new HashSet<~>();
         while (isFunction) {
@@ -77,17 +74,18 @@ public class MainMenu {
 
                 case "3":
                     System.out.println("Enter Email. Format: name@domain.com");
-                    Scanner userEmail = new Scanner(System.in);
+                    Scanner userEmailTwo = new Scanner(System.in);
                     System.out.println("First name");
                     Scanner userFirstName = new Scanner(System.in);
                     System.out.println("Last name");
                     Scanner userLastName = new Scanner(System.in);
-                    HotelResource.createACustomer(userEmail.nextLine(), userFirstName.nextLine(),
+                    HotelResource.createACustomer(userEmailTwo.nextLine(), userFirstName.nextLine(),
                             userLastName.nextLine());
                     break;
 
                 case "4":
                     //create AdminMenu
+                    AdminMenu.AdminMenu();
                 case "5":
                     isFunction = false;
                 default:
