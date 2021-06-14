@@ -22,7 +22,7 @@ public class CustomerService {
         //return emailToPerson.get(customerEmail);
         return null;
     }
-    public Collection<Customer> getAllCustomers(){
+    public static Collection<Customer> getAllCustomers(){
         return PersonSet;
     }
 }
