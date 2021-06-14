@@ -9,7 +9,7 @@ import static model.RoomType.DOUBLE;
 import static model.RoomType.SINGLE;
 
 public class AdminMenu {
-    public void AdminMenu() {
+    public static void AdminMenu() {
         boolean isFunction = true;
         boolean makeRoom = true;
         while (isFunction) {
@@ -61,11 +61,14 @@ public class AdminMenu {
                     break;
                 case "5":
                     isFunction = false;
+                    //MainMenu.MainMenu();
 
                 default:
                     System.out.println("Invalid input");
                     break;
             }
+
         }
+        MainMenu.MainMenu();
     }
 }
