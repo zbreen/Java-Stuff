@@ -13,7 +13,7 @@ public class ReservationService {
     //private Set<IRoom> availableRooms = new HashSet<IRoom>();
     private static Set<Reservation> reservations = new HashSet<Reservation>();
     //private Set<Reservation> foundReservations;
-    public void addRoom(IRoom room){
+    public static void addRoom(IRoom room){
         rooms.add(room);
     }
     public static IRoom getARoom(String roomId){
@@ -52,5 +52,9 @@ public class ReservationService {
         for(Reservation r: reservations){
             System.out.println(r);
         }
+    }
+
+    public static Collection<IRoom> getAllRooms(){
+        return rooms;
     }
 }
