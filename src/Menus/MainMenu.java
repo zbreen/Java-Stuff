@@ -11,9 +11,9 @@ import service.ReservationService;
 import java.util.*;
 
 public class MainMenu {
-    public static void MainMenu() {
+    public static void MainMenu() throws ParseException{
         boolean isFunction = true;
-        Set<IRoom> collectedList; //= new HashSet<~>();
+        Collection<IRoom> collectedList; //= new HashSet<~>();
         while (isFunction) {
             System.out.println("Welcome to the Hotel Reservation Application\n----------------------");
             //System.out.println("----------------------");
@@ -27,7 +27,14 @@ public class MainMenu {
                     Scanner userCheckIn = new Scanner(System.in);
                     System.out.println("Enter check out (mm/dd/yyyy)");
                     Scanner userCheckOut = new Scanner(System.in);
-                    collectedList = HotelResource.findARoom(userCheckIn.nextLine(), userCheckOut.nextLine());
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+                    String date1 = userCheckIn.nextLine();
+                    String date2 = userCheckOut.nextLine();
+                    Date checkIn = new SimpleDateFormat("dd-MM-yyyy").parse(date1);
+                    //Date checkIn = formatter.parse(userCheckIn.nextLine());
+                    //Date checkOut = formatter.parse(userCheckOut.nextLine());
+                    Date checkOut = new SimpleDateFormat("dd-MM-yyy").parse(date2);
+                    collectedList = HotelResource.findARoom(checkIn, checkOut);
                     if(collectedList.size() != 0) {
 
 
@@ -47,12 +54,16 @@ public class MainMenu {
                                         if (CustomerService.getCustomer(userEmail.nextLine()) != null) {
                                             System.out.println("What room number would you like to reserve?");
                                             Scanner userRoom = new Scanner(System.in);
-                                            SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
-                                            Date checkIn = formatter.parse(userCheckIn.nextLine());
-                                            Date checkOut = formatter.parse(userCheckOut.nextLine());
+                                            /*SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+                                            String date1 = userCheckIn.nextLine();
+                                            String date2 = userCheckOut.nextLine();
+                                            Date checkIn = new SimpleDateFormat("dd-MM-yyyy").parse(date1);
+                                            //Date checkIn = formatter.parse(userCheckIn.nextLine());
+                                            //Date checkOut = formatter.parse(userCheckOut.nextLine());
+                                            Date checkOut = new SimpleDateFormat("dd-MM-yyy").parse(date2);*/
                                             HotelResource.bookARoom(userEmail.nextLine(),
-                                                    HotelResource.getRoom(userRoom.nextLine()), userCheckIn.nextLine(),
-                                                    userCheckOut.nextLine());
+                                                    HotelResource.getRoom(userRoom.nextLine()), checkIn,
+                                                    checkOut);
                                             accountMake = false;
                                             emailFound = true;
                                         } else {
@@ -70,9 +81,16 @@ public class MainMenu {
                                             userLastName.nextLine());
                                     System.out.println("What room number would you like to reserve?");
                                     Scanner userRoom = new Scanner(System.in);
+                                    /*SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+                                    String date1 = userCheckIn.nextLine();
+                                    String date2 = userCheckOut.nextLine();
+                                    Date checkIn = new SimpleDateFormat("dd-MM-yyyy").parse(date1);
+                                    //Date checkIn = formatter.parse(userCheckIn.nextLine());
+                                    //Date checkOut = formatter.parse(userCheckOut.nextLine());
+                                    Date checkOut = new SimpleDateFormat("dd-MM-yyy").parse(date2);*/
                                     HotelResource.bookARoom(userEmail.nextLine(),
-                                            HotelResource.getRoom(userRoom.nextLine()), userCheckIn.nextLine(),
-                                            userCheckOut.nextLine());
+                                            HotelResource.getRoom(userRoom.nextLine()), checkIn,
+                                            checkOut);
                                     accountMake = false;
                                 }
                                 else{
