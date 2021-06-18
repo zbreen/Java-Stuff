@@ -2,6 +2,8 @@ package Menus;
 import api.HotelResource;
 import model.Customer;
 import model.IRoom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import model.Reservation;
 import service.CustomerService;
 import service.ReservationService;
@@ -32,38 +34,53 @@ public class MainMenu {
                         System.out.println(collectedList);
                         System.out.println("Would you like to book a room? Y/N");
                         Scanner userResponse = new Scanner(System.in);
-                        if (userResponse.nextLine().toLowerCase() == "y") {
-                            System.out.println("Do you have an account?");
-                            Scanner userAccount = new Scanner(System.in);
-                            if(userAccount.nextLine().toLowerCase() == "y"){
-                                System.out.println("Enter Email. Format: name@domain.com");
-                                Scanner userEmail = new Scanner(System.in);
-                                Customer c = HotelResource.getCustomer(userEmail.nextLine());
-                                System.out.println("What room number would you like to reserve?");
-                                Scanner userRoom = new Scanner(System.in);
-                                HotelResource.bookARoom(userEmail.nextLine(),
-                                        HotelResource.getRoom(userRoom.nextLine()), userCheckIn.nextLine(),
-                                        userCheckOut.nextLine());
-                            }
-                            else if(userAccount.nextLine().toLowerCase() == "n"){
-                                System.out.println("Enter Email. Format: name@domain.com");
-                                Scanner userEmail = new Scanner(System.in);
-                                System.out.println("First name");
-                                Scanner userFirstName = new Scanner(System.in);
-                                System.out.println("Last name");
-                                Scanner userLastName = new Scanner(System.in);
-                                HotelResource.createACustomer(userEmail.nextLine(), userFirstName.nextLine(),
-                                        userLastName.nextLine());
-                                System.out.println("What room number would you like to reserve?");
-                                Scanner userRoom = new Scanner(System.in);
-                                HotelResource.bookARoom(userEmail.nextLine(),
-                                        HotelResource.getRoom(userRoom.nextLine()), userCheckIn.nextLine(),
-                                        userCheckOut.nextLine());
-
+                        boolean accountMake = true;
+                        while (accountMake) {
+                            if (userResponse.nextLine().toLowerCase() == "y") {
+                                System.out.println("Do you have an account?");
+                                Scanner userAccount = new Scanner(System.in);
+                                if (userAccount.nextLine().toLowerCase() == "y") {
+                                    System.out.println("Enter Email. Format: name@domain.com");
+                                    Scanner userEmail = new Scanner(System.in);
+                                    boolean emailFound = false;
+                                    while(!emailFound) {
+                                        if (CustomerService.getCustomer(userEmail.nextLine()) != null) {
+                                            System.out.println("What room number would you like to reserve?");
+                                            Scanner userRoom = new Scanner(System.in);
+                                            SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+                                            Date checkIn = formatter.parse(userCheckIn.nextLine());
+                                            Date checkOut = formatter.parse(userCheckOut.nextLine());
+                                            HotelResource.bookARoom(userEmail.nextLine(),
+                                                    HotelResource.getRoom(userRoom.nextLine()), userCheckIn.nextLine(),
+                                                    userCheckOut.nextLine());
+                                            accountMake = false;
+                                            emailFound = true;
+                                        } else {
+                                            System.out.println("Email not found, re-enter");
+                                        }
+                                    }
+                                } else if (userAccount.nextLine().toLowerCase() == "n") {
+                                    System.out.println("Enter Email. Format: name@domain.com");
+                                    Scanner userEmail = new Scanner(System.in);
+                                    System.out.println("First name");
+                                    Scanner userFirstName = new Scanner(System.in);
+                                    System.out.println("Last name");
+                                    Scanner userLastName = new Scanner(System.in);
+                                    HotelResource.createACustomer(userEmail.nextLine(), userFirstName.nextLine(),
+                                            userLastName.nextLine());
+                                    System.out.println("What room number would you like to reserve?");
+                                    Scanner userRoom = new Scanner(System.in);
+                                    HotelResource.bookARoom(userEmail.nextLine(),
+                                            HotelResource.getRoom(userRoom.nextLine()), userCheckIn.nextLine(),
+                                            userCheckOut.nextLine());
+                                    accountMake = false;
+                                }
+                                else{
+                                    System.out.println("Enter y/n");
+                                }
                             }
                         }
                     }
-                    //Work more on this
                     break;
                 case "2":
                     System.out.println("Enter Email. Format: name@domain.com");
@@ -84,7 +101,6 @@ public class MainMenu {
                     break;
 
                 case "4":
-                    //create AdminMenu
                     AdminMenu.AdminMenu();
                 case "5":
                     isFunction = false;
