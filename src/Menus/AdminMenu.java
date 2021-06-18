@@ -1,9 +1,14 @@
 package Menus;
 
 import api.AdminResource;
+import model.IRoom;
+import model.Room;
 import model.RoomType;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import static model.RoomType.DOUBLE;
 import static model.RoomType.SINGLE;
@@ -42,7 +47,12 @@ public class AdminMenu {
                         } else {
                             r = SINGLE;
                         }
-                        AdminResource.addRoom(userRoom.nextLine(), userPrice.nextLine(), r);
+                        String userRoomNum = userRoom.nextLine();
+                        Double userPriceCheck = Double.parseDouble(userPrice.nextLine());
+                        Room newRoom = new Room(userRoomNum, userPriceCheck, r);
+                        List<IRoom> collectedRooms = new List<IRoom>(); //= new HashSet<~>();
+                        collectedRooms.add(newRoom);
+                        AdminResource.addRoom(collectedRooms);
                         System.out.println("Make another room? Y/N");
                         boolean choiceMade = false;
                         while(!choiceMade) {
@@ -61,7 +71,6 @@ public class AdminMenu {
                     break;
                 case "5":
                     isFunction = false;
-                    //MainMenu.MainMenu();
 
                 default:
                     System.out.println("Invalid input");
