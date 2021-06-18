@@ -50,7 +50,7 @@ public class AdminMenu {
                         String userRoomNum = userRoom.nextLine();
                         Double userPriceCheck = Double.parseDouble(userPrice.nextLine());
                         Room newRoom = new Room(userRoomNum, userPriceCheck, r);
-                        List<IRoom> collectedRooms = new List<IRoom>(); //= new HashSet<~>();
+                        List<IRoom> collectedRooms = new List<~>(); //= new HashSet<~>();
                         collectedRooms.add(newRoom);
                         AdminResource.addRoom(collectedRooms);
                         System.out.println("Make another room? Y/N");
